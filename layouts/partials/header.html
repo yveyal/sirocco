@@ -1,0 +1,20 @@
+{{ $sectionsAlpha := sort site.Sections "LinkTitle" "asc" }}
+{{ $sections := sort $sectionsAlpha "Weight" "asc" }}
+<header class="site-header border-bottom">
+  <div class="container py-3">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+      <a class="site-title nav-text" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+      <nav class="section-nav d-flex flex-wrap gap-3" aria-label="Section navigation">
+        <a class="nav-text" href="{{ "/" | relURL }}">Home</a>
+        {{ range $sections }}
+          <a class="nav-text" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+        {{ end }}
+      </nav>
+    </div>
+    {{ with site.Params.social }}
+      <p class="meta-links meta-text mb-0 mt-2">
+        {{ range $i, $s := . }}{{ if $i }} | {{ end }}<a href="{{ $s.url }}">{{ $s.name }}</a>{{ end }}
+      </p>
+    {{ end }}
+  </div>
+</header>

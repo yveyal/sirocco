@@ -1,0 +1,27 @@
+{{ define "main" }}
+<section class="container py-5">
+  <header class="mb-4">
+    <h1 class="section-title mb-2">{{ .Title }}</h1>
+  </header>
+
+  {{ if eq .Data.Plural "tags" }}
+    <ul class="list-unstyled mb-0 section-tags-list">
+      {{ range .Data.Terms.Alphabetical }}
+        <li class="preview-item py-1 section-tag-item">
+          <a class="preview-link" href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+          <span class="meta-text">({{ .Count }})</span>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <ul class="list-unstyled mb-0">
+      {{ range .Data.Terms.Alphabetical }}
+        <li class="preview-item py-2">
+          <a class="preview-link" href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+          <span class="meta-text">({{ .Count }})</span>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</section>
+{{ end }}

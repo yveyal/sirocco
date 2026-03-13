@@ -1,0 +1,92 @@
+{{ define "main" }}
+<section class="container py-5">
+  <header class="mb-4">
+    <h1 class="section-title mb-2">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="section-description mb-0">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{ $pages := .RegularPagesRecursive.ByDate.Reverse }}
+  {{ if gt (len $pages) 0 }}
+    <ul class="list-unstyled">
+      {{ range $pages }}
+        <li class="preview-item py-3">
+          <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p class="preview-empty meta-text mb-0">No content yet.</p>
+  {{ end }}
+
+  {{ if eq .Kind "section" }}
+    {{ $showSeriesIndex := true }}
+    {{ with .Params.show_series_index }}{{ $showSeriesIndex = . }}{{ end }}
+    {{ if $showSeriesIndex }}
+      {{ $seriesItems := slice }}
+      {{ range $term, $taxonomy := site.Taxonomies.series }}
+        {{ $inSection := where $taxonomy.Pages "Section" $.Section }}
+        {{ if gt (len $inSection) 0 }}
+          {{ $termPage := site.GetPage (printf "/series/%s" $term) }}
+          {{ $link := printf "/series/%s/" $term | relURL }}
+          {{ $title := $term }}
+          {{ with $termPage }}
+            {{ $link = .RelPermalink }}
+            {{ $title = .LinkTitle }}
+          {{ end }}
+          {{ $seriesItems = $seriesItems | append (dict "title" $title "link" $link "count" (len $inSection)) }}
+        {{ end }}
+      {{ end }}
+      {{ $seriesItems = sort $seriesItems "title" "asc" }}
+      {{ if gt (len $seriesItems) 0 }}
+        <section class="section-block py-3 mt-4">
+          <h2 class="section-title mb-2">Series In This Section</h2>
+          <ul class="list-unstyled mb-0">
+            {{ range $seriesItems }}
+              <li class="preview-item py-1">
+                <a class="preview-link" href="{{ .link }}">{{ .title }}</a>
+                <span class="meta-text">({{ .count }})</span>
+              </li>
+            {{ end }}
+          </ul>
+        </section>
+      {{ end }}
+    {{ end }}
+
+    {{ $showTagsIndex := true }}
+    {{ with .Params.show_tags_index }}{{ $showTagsIndex = . }}{{ end }}
+    {{ if $showTagsIndex }}
+      {{ $tagItems := slice }}
+      {{ range $term, $taxonomy := site.Taxonomies.tags }}
+        {{ $inSection := where $taxonomy.Pages "Section" $.Section }}
+        {{ if gt (len $inSection) 0 }}
+          {{ $termPage := site.GetPage (printf "/tags/%s" $term) }}
+          {{ $link := printf "/tags/%s/" $term | relURL }}
+          {{ $title := $term }}
+          {{ with $termPage }}
+            {{ $link = .RelPermalink }}
+            {{ $title = .LinkTitle }}
+          {{ end }}
+          {{ $tagItems = $tagItems | append (dict "title" $title "link" $link "count" (len $inSection)) }}
+        {{ end }}
+      {{ end }}
+      {{ $tagItems = sort $tagItems "title" "asc" }}
+      {{ if gt (len $tagItems) 0 }}
+        <section class="section-block py-3 mt-4">
+          <h2 class="section-title mb-2">Tags In This Section</h2>
+          <ul class="list-unstyled mb-0 section-tags-list">
+            {{ range $tagItems }}
+              <li class="preview-item py-1 section-tag-item">
+                <a class="preview-link" href="{{ .link }}">{{ .title }}</a>
+                <span class="meta-text">({{ .count }})</span>
+              </li>
+            {{ end }}
+          </ul>
+        </section>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</section>
+{{ end }}

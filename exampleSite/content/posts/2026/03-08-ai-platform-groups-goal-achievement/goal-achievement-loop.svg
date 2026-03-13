@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Goal achievement loop">
+  <rect width="1200" height="675" fill="#f4efe4"/>
+  <text x="70" y="90" font-family="Inter, Arial, sans-serif" font-size="42" fill="#2b231a">Goal Achievement Loop</text>
+  <circle cx="300" cy="340" r="110" fill="#fff" stroke="#d8cdbd" stroke-width="3"/>
+  <circle cx="600" cy="340" r="110" fill="#fff" stroke="#d8cdbd" stroke-width="3"/>
+  <circle cx="900" cy="340" r="110" fill="#fff" stroke="#d8cdbd" stroke-width="3"/>
+  <text x="235" y="350" font-family="Inter, Arial, sans-serif" font-size="30" fill="#2b231a">Plan</text>
+  <text x="525" y="350" font-family="Inter, Arial, sans-serif" font-size="30" fill="#2b231a">Deliver</text>
+  <text x="825" y="350" font-family="Inter, Arial, sans-serif" font-size="30" fill="#2b231a">Measure</text>
+  <path d="M410 340 L490 340" stroke="#6f6456" stroke-width="6" marker-end="url(#arr)"/>
+  <path d="M710 340 L790 340" stroke="#6f6456" stroke-width="6" marker-end="url(#arr)"/>
+  <path d="M980 260 C1080 220,1100 470,960 500" fill="none" stroke="#6f6456" stroke-width="6" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#6f6456"/>
+    </marker>
+  </defs>
+</svg>

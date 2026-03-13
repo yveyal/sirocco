@@ -1,0 +1,30 @@
+{{ define "main" }}
+<article class="container py-5">
+  <header class="mb-4">
+    <h1 class="article-title mb-2">{{ .Title }}</h1>
+    <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+  </header>
+
+  <div class="content-body article-body">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.tags }}
+    <section class="article-meta mt-4">
+      <h2 class="h6 section-title">Tags</h2>
+      <p class="mb-0 meta-text">
+        {{ range $i, $tag := . }}{{ if $i }}, {{ end }}<a class="preview-link meta-text" href="{{ (printf "/tags/%s/" $tag) | relURL }}">{{ $tag }}</a>{{ end }}
+      </p>
+    </section>
+  {{ end }}
+
+  {{ with .Params.series }}
+    <section class="article-meta mt-2">
+      <h2 class="h6 section-title">Series</h2>
+      <p class="mb-0 meta-text">
+        {{ range $i, $series := . }}{{ if $i }}, {{ end }}<a class="preview-link meta-text" href="{{ (printf "/series/%s/" $series) | relURL }}">{{ $series }}</a>{{ end }}
+      </p>
+    </section>
+  {{ end }}
+</article>
+{{ end }}

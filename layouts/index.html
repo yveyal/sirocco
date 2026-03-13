@@ -1,0 +1,84 @@
+{{ define "main" }}
+  {{ $homeSectionKeys := slice }}
+  {{ range site.Sections }}
+    {{ $hidden := false }}
+    {{ with .Params.home_hidden }}{{ $hidden = . }}{{ end }}
+    {{ if not $hidden }}
+      {{ $position := 100000 }}
+      {{ $rawPosition := index .Params "home_position" }}
+      {{ if ne $rawPosition nil }}{{ $position = int $rawPosition }}{{ end }}
+      {{ $homeKey := printf "%08d-%s" $position (lower .LinkTitle) }}
+      {{ $.Scratch.SetInMap "homeSectionsByKey" $homeKey . }}
+      {{ $homeSectionKeys = $homeSectionKeys | append $homeKey }}
+    {{ end }}
+  {{ end }}
+  {{ $homeSectionKeys = sort $homeSectionKeys "value" "asc" }}
+  {{ $showHomeTags := true }}
+  {{ with site.Params.home_show_tags }}{{ $showHomeTags = . }}{{ end }}
+
+  <section class="container py-4">
+    <h1 class="home-title article-title mb-2">{{ site.Title }}</h1>
+    {{ with .Description }}
+      <p class="home-description section-description mb-0">{{ . }}</p>
+    {{ else }}
+    {{ with site.Params.description }}
+      <p class="home-description section-description mb-0">{{ . }}</p>
+    {{ end }}
+    {{ end }}
+  </section>
+
+  <section class="container pb-5">
+    {{ range $homeSectionKeys }}
+      {{ $section := index ($.Scratch.Get "homeSectionsByKey") . }}
+      {{ $items := first 5 ($section.RegularPagesRecursive.ByDate.Reverse) }}
+      <article class="section-block py-3">
+        <h2 class="section-title mb-1"><a href="{{ $section.RelPermalink }}">{{ $section.LinkTitle }}</a></h2>
+        {{ with $section.Params.description }}
+          <p class="section-description mb-2">{{ . }}</p>
+        {{ end }}
+        {{ if gt (len $items) 0 }}
+          <ul class="list-unstyled mb-0">
+            {{ range $items }}
+              <li class="preview-item py-2 d-flex flex-column flex-sm-row gap-sm-3">
+                <time class="preview-date meta-text" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+                <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </li>
+            {{ end }}
+          </ul>
+        {{ else }}
+          <p class="preview-empty meta-text mb-0">No articles yet in this section.</p>
+        {{ end }}
+      </article>
+    {{ end }}
+  </section>
+
+  {{ if $showHomeTags }}
+    {{ $homeTags := slice }}
+    {{ range $term, $taxonomy := site.Taxonomies.tags }}
+      {{ $termPage := site.GetPage (printf "/tags/%s" $term) }}
+      {{ $link := printf "/tags/%s/" $term | relURL }}
+      {{ $title := $term }}
+      {{ with $termPage }}
+        {{ $link = .RelPermalink }}
+        {{ $title = .LinkTitle }}
+      {{ end }}
+      {{ $homeTags = $homeTags | append (dict "title" $title "link" $link "count" (len $taxonomy.Pages)) }}
+    {{ end }}
+    {{ $homeTags = sort $homeTags "title" "asc" }}
+    {{ if gt (len $homeTags) 0 }}
+      <section class="container pb-5">
+        <article class="section-block py-3 text-center">
+          <h2 class="section-title mb-2">Tags</h2>
+          <ul class="list-unstyled mb-0 section-tags-list d-flex flex-wrap justify-content-center align-items-center">
+            {{ range $homeTags }}
+              <li class="preview-item py-1 section-tag-item">
+                <a class="preview-link" href="{{ .link }}">{{ .title }}</a>
+                <span class="meta-text">({{ .count }})</span>
+              </li>
+            {{ end }}
+          </ul>
+        </article>
+      </section>
+    {{ end }}
+  {{ end }}
+{{ end }}

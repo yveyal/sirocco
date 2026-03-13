@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="container py-5">
+  <header class="mb-4">
+    <h1 class="display-6 mb-2">{{ .Title }}</h1>
+  </header>
+
+  <ul class="list-unstyled">
+    {{ range .Pages.ByDate.Reverse }}
+      <li class="preview-item py-2">
+        <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <p class="preview-meta mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+      </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

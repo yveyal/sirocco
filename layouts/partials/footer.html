@@ -1,0 +1,16 @@
+<footer class="site-footer border-top border-coffee-soft mt-auto">
+  {{ $footerAlignment := "left" }}
+  {{ with site.Params.footer_alignment }}{{ $footerAlignment = lower . }}{{ end }}
+  {{ $footerAlignClass := "text-start" }}
+  {{ if eq $footerAlignment "right" }}
+    {{ $footerAlignClass = "text-end" }}
+  {{ else if or (eq $footerAlignment "middle") (eq $footerAlignment "center") }}
+    {{ $footerAlignClass = "text-center" }}
+  {{ end }}
+
+  <div class="container py-4 {{ $footerAlignClass }}">
+    {{ $footerText := "Brewed with Hugo." }}
+    {{ with site.Params.footer_text }}{{ $footerText = . }}{{ end }}
+    <p class="mb-0">{{ $footerText }}</p>
+  </div>
+</footer>
