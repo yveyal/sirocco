@@ -5,6 +5,8 @@ tags: []
 series: []
 summary: ""
 draft: false
+show_title: false
+show_date: false
 ---
 
 # Sahara

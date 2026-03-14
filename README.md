@@ -47,6 +47,15 @@ This theme is designed around:
 - Article content in page bundles:
   - `content/<section>/<YYYY>/<MM-DD-SLUG>/index.md`
 
+Article pages also support per-page rendering controls through front matter:
+
+- `show_title`: show/hide the article title on the single page
+- `show_date`: show/hide the article date on the single page
+- `show_preview_title`: show/hide the article title in preview lists such as home, section, taxonomy, and footer menus
+- `show_preview_date`: show/hide the article date in preview lists that render dates
+
+If omitted, all four default to `true` to preserve existing rendering.
+
 ## Install as Submodule
 
 From your Hugo site root:

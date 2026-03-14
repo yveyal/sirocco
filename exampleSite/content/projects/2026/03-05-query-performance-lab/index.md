@@ -1,6 +1,8 @@
 ---
 title: "Query Performance Lab"
 date: 2026-03-05
+show_title: false
+show_date: true
 tags:
   - "projects"
   - "performance"

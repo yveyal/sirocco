@@ -42,10 +42,17 @@
         {{ if gt (len $items) 0 }}
           <ul class="list-unstyled mb-0">
             {{ range $items }}
-              <li class="preview-item py-2 d-flex flex-column flex-sm-row gap-sm-3">
-                <time class="preview-date meta-text" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-                <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-              </li>
+              {{ $renderFlags := partial "article-render-flags.html" . }}
+              {{ if or (index $renderFlags "showPreviewTitle") (index $renderFlags "showPreviewDate") }}
+                <li class="preview-item py-2 d-flex flex-column flex-sm-row gap-sm-3">
+                  {{ if index $renderFlags "showPreviewDate" }}
+                    <time class="preview-date meta-text" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+                  {{ end }}
+                  {{ if index $renderFlags "showPreviewTitle" }}
+                    <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  {{ end }}
+                </li>
+              {{ end }}
             {{ end }}
           </ul>
         {{ else }}

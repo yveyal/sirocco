@@ -1,9 +1,19 @@
 {{ define "main" }}
 <article class="container py-5">
-  <header class="mb-4">
-    <h1 class="article-title mb-2">{{ .Title }}</h1>
-    <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
-  </header>
+  {{ $renderFlags := partial "article-render-flags.html" . }}
+  {{ $showTitle := index $renderFlags "showTitle" }}
+  {{ $showDate := index $renderFlags "showDate" }}
+
+  {{ if or $showTitle $showDate }}
+    <header class="mb-4">
+      {{ if $showTitle }}
+        <h1 class="article-title mb-2">{{ .Title }}</h1>
+      {{ end }}
+      {{ if $showDate }}
+        <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+      {{ end }}
+    </header>
+  {{ end }}
 
   <div class="content-body article-body">
     {{ .Content }}

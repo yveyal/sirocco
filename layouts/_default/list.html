@@ -11,10 +11,17 @@
   {{ if gt (len $pages) 0 }}
     <ul class="list-unstyled">
       {{ range $pages }}
-        <li class="preview-item py-3">
-          <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-          <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
-        </li>
+        {{ $renderFlags := partial "article-render-flags.html" . }}
+        {{ if or (index $renderFlags "showPreviewTitle") (index $renderFlags "showPreviewDate") }}
+          <li class="preview-item py-3">
+            {{ if index $renderFlags "showPreviewTitle" }}
+              <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{ end }}
+            {{ if index $renderFlags "showPreviewDate" }}
+              <p class="preview-meta meta-text mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+            {{ end }}
+          </li>
+        {{ end }}
       {{ end }}
     </ul>
   {{ else }}

@@ -6,10 +6,17 @@
 
   <ul class="list-unstyled">
     {{ range .Pages.ByDate.Reverse }}
-      <li class="preview-item py-2">
-        <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-        <p class="preview-meta mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
-      </li>
+      {{ $renderFlags := partial "article-render-flags.html" . }}
+      {{ if or (index $renderFlags "showPreviewTitle") (index $renderFlags "showPreviewDate") }}
+        <li class="preview-item py-2">
+          {{ if index $renderFlags "showPreviewTitle" }}
+            <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ end }}
+          {{ if index $renderFlags "showPreviewDate" }}
+            <p class="preview-meta mb-0">{{ .Date.Format "Jan 2, 2006" }}</p>
+          {{ end }}
+        </li>
+      {{ end }}
     {{ end }}
   </ul>
 </section>

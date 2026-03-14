@@ -1,0 +1,26 @@
+{{ $showTitle := true }}
+{{ $rawShowTitle := index .Params "show_title" }}
+{{ if ne $rawShowTitle nil }}
+  {{ $showTitle = $rawShowTitle }}
+{{ end }}
+{{ $showDate := true }}
+{{ $rawShowDate := index .Params "show_date" }}
+{{ if ne $rawShowDate nil }}
+  {{ $showDate = $rawShowDate }}
+{{ end }}
+{{ $showPreviewTitle := true }}
+{{ $rawShowPreviewTitle := index .Params "show_preview_title" }}
+{{ if ne $rawShowPreviewTitle nil }}
+  {{ $showPreviewTitle = $rawShowPreviewTitle }}
+{{ end }}
+{{ $showPreviewDate := true }}
+{{ $rawShowPreviewDate := index .Params "show_preview_date" }}
+{{ if ne $rawShowPreviewDate nil }}
+  {{ $showPreviewDate = $rawShowPreviewDate }}
+{{ end }}
+{{ return (dict
+  "showTitle" $showTitle
+  "showDate" $showDate
+  "showPreviewTitle" $showPreviewTitle
+  "showPreviewDate" $showPreviewDate
+) }}

@@ -1,6 +1,8 @@
 ---
 title: "Building a Hugo Theme Homepage"
 date: 2026-03-08
+show_title: true
+show_date: true
 tags:
   - "hugo"
   - "design"

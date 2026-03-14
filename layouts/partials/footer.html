@@ -69,9 +69,12 @@
                   {{ if gt (len $items) 0 }}
                     <ul class="footer-menu-list list-unstyled mb-0">
                       {{ range $items }}
-                        <li class="footer-menu-item">
-                          <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-                        </li>
+                        {{ $renderFlags := partial "article-render-flags.html" . }}
+                        {{ if index $renderFlags "showPreviewTitle" }}
+                          <li class="footer-menu-item">
+                            <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                          </li>
+                        {{ end }}
                       {{ end }}
                     </ul>
                   {{ end }}
