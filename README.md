@@ -140,6 +140,7 @@ Define in `content/<section>/_index.md`:
 - `footer_menu_show_title`: show/hide the section title in the footer menu
 - `home_position`: integer order on homepage (`0` = top)
 - `home_hidden`: hide/show section on homepage
+- `show_body_in_section_view`: render the `_index.md` body on the section page
 - `show_series_index`: show/hide section series block
 - `show_tags_index`: show/hide section tags block
 - `description`: section description rendered on home/list pages
@@ -147,6 +148,8 @@ Define in `content/<section>/_index.md`:
 `show_in_menu_when_section_chosen` uses section directory names such as `posts`, `projects`, or `notes`.
 
 Footer menu sections render the section body from `_index.md` and, when present, a vertical list of nested articles.
+
+On section pages, the `_index.md` body is shown automatically when the section has no nested articles. Set `show_body_in_section_view: true` to always show the body even when articles are present.
 
 ### Site params (example)
 

@@ -10,6 +10,7 @@ footer_menu_position_slot: 1
 footer_menu_show_title: true
 home_position: 100
 home_hidden: false
+show_body_in_section_view: false
 show_series_index: true
 show_tags_index: true
 ---

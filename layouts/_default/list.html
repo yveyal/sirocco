@@ -8,6 +8,18 @@
   </header>
 
   {{ $pages := .RegularPagesRecursive.ByDate.Reverse }}
+  {{ $showBodyInSectionView := false }}
+  {{ $rawShowBodyInSectionView := index .Params "show_body_in_section_view" }}
+  {{ if ne $rawShowBodyInSectionView nil }}
+    {{ $showBodyInSectionView = $rawShowBodyInSectionView }}
+  {{ end }}
+  {{ $shouldShowSectionBody := and .Content (or $showBodyInSectionView (eq (len $pages) 0)) }}
+  {{ if $shouldShowSectionBody }}
+    <div class="article-body mb-4">
+      {{ .Content }}
+    </div>
+  {{ end }}
+
   {{ if gt (len $pages) 0 }}
     <ul class="list-unstyled">
       {{ range $pages }}
@@ -25,7 +37,9 @@
       {{ end }}
     </ul>
   {{ else }}
-    <p class="preview-empty meta-text mb-0">No content yet.</p>
+    {{ if not $shouldShowSectionBody }}
+      <p class="preview-empty meta-text mb-0">No content yet.</p>
+    {{ end }}
   {{ end }}
 
   {{ if eq .Kind "section" }}
