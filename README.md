@@ -122,11 +122,15 @@ The home page front matter `title` and `description` remain available for metada
 
 Define in `content/<section>/_index.md`:
 
+- `show_in_menu`: show/hide the section in the header menu
+- `show_in_menu_when_section_chosen`: list of section names that should reveal this section in the header when one of them is active
 - `home_position`: integer order on homepage (`0` = top)
 - `home_hidden`: hide/show section on homepage
 - `show_series_index`: show/hide section series block
 - `show_tags_index`: show/hide section tags block
 - `description`: section description rendered on home/list pages
+
+`show_in_menu_when_section_chosen` uses section directory names such as `posts`, `projects`, or `notes`.
 
 ### Site params (example)
 

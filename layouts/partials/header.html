@@ -2,6 +2,8 @@
 {{ $sections := sort $sectionsAlpha "Weight" "asc" }}
 {{ $isHome := .IsHome }}
 {{ $currentSection := .CurrentSection }}
+{{ $currentSectionName := "" }}
+{{ with $currentSection }}{{ $currentSectionName = .Section }}{{ end }}
 <header class="site-header border-bottom">
   <div class="container py-3">
     <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
@@ -14,11 +16,20 @@
         </a>
         {{ range $sections }}
           {{ $isCurrent := and $currentSection (eq $currentSection.RelPermalink .RelPermalink) }}
-          <a class="nav-text{{ if $isCurrent }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
-            <span class="nav-bracket nav-bracket-open" aria-hidden="true">[</span>
-            <span class="nav-label">{{ .LinkTitle }}</span>
-            <span class="nav-bracket nav-bracket-close" aria-hidden="true">]</span>
-          </a>
+          {{ $showInMenu := true }}
+          {{ $rawShowInMenu := index .Params "show_in_menu" }}
+          {{ if ne $rawShowInMenu nil }}{{ $showInMenu = $rawShowInMenu }}{{ end }}
+          {{ $showWhenChosen := false }}
+          {{ with .Params.show_in_menu_when_section_chosen }}
+            {{ if and $currentSectionName (in . $currentSectionName) }}{{ $showWhenChosen = true }}{{ end }}
+          {{ end }}
+          {{ if or $showInMenu $showWhenChosen $isCurrent }}
+            <a class="nav-text{{ if $isCurrent }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+              <span class="nav-bracket nav-bracket-open" aria-hidden="true">[</span>
+              <span class="nav-label">{{ .LinkTitle }}</span>
+              <span class="nav-bracket nav-bracket-close" aria-hidden="true">]</span>
+            </a>
+          {{ end }}
         {{ end }}
       </nav>
     </div>
