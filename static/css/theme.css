@@ -2,6 +2,7 @@
   --bg: #f7f2e8;
   --text: #2b231a;
   --muted: #6f6456;
+  --muted-light: #978a79;
   --line: #d8cdbd;
   --link: #1f4f8b;
   --link-hover: #163963;
@@ -56,6 +57,57 @@ body.site-shell {
   font-size: var(--size-nav);
   font-weight: 500;
   letter-spacing: 0.01em;
+}
+
+.section-nav .nav-text {
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.08rem;
+}
+
+.section-nav .nav-text:hover,
+.section-nav .nav-text:focus {
+  color: var(--muted-light);
+}
+
+.section-nav .nav-label {
+  display: inline-block;
+}
+
+.section-nav .nav-bracket {
+  opacity: 0;
+  color: var(--muted-light);
+  font-style: italic;
+  font-weight: 400;
+  transition: opacity 160ms ease, color 160ms ease;
+}
+
+.section-nav .nav-text:hover .nav-bracket,
+.section-nav .nav-text:focus .nav-bracket {
+  opacity: 1;
+}
+
+.section-nav .nav-text:hover .nav-label,
+.section-nav .nav-text:focus .nav-label {
+  font-style: italic;
+}
+
+.section-nav .nav-text.is-active {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.section-nav .nav-text.is-active .nav-label {
+  font-style: normal;
+}
+
+.section-nav .nav-text.is-active .nav-bracket {
+  opacity: 1;
+  color: currentColor;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .section-title {
@@ -173,7 +225,6 @@ body.site-shell {
   padding: 0.8rem 0.9rem;
 }
 
-.section-nav a,
 .meta-links a,
 .preview-link,
 .section-title a,
@@ -201,12 +252,10 @@ a.article-title,
   font-family: var(--font-article-title);
 }
 
-.section-nav a:hover,
 .meta-links a:hover,
 .preview-link:hover,
 .section-title a:hover,
 .article-body a:hover,
-.section-nav a:focus,
 .meta-links a:focus,
 .preview-link:focus,
 .section-title a:focus,

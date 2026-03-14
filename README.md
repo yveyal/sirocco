@@ -5,6 +5,7 @@ A [Hugo](https://gohugo.io/) theme for a personal technical blog with a minimal 
 ## Features
 
 - Section-first homepage (ordered and toggleable per section)
+- Header navigation with bracketed active and hover states
 - Section list pages with optional in-section indexes:
   - Series index
   - Tags index

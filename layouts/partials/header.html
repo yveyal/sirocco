@@ -1,13 +1,24 @@
 {{ $sectionsAlpha := sort site.Sections "LinkTitle" "asc" }}
 {{ $sections := sort $sectionsAlpha "Weight" "asc" }}
+{{ $isHome := .IsHome }}
+{{ $currentSection := .CurrentSection }}
 <header class="site-header border-bottom">
   <div class="container py-3">
     <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
       <a class="site-title nav-text" href="{{ "/" | relURL }}">{{ site.Title }}</a>
       <nav class="section-nav d-flex flex-wrap gap-3" aria-label="Section navigation">
-        <a class="nav-text" href="{{ "/" | relURL }}">Home</a>
+        <a class="nav-text{{ if $isHome }} is-active{{ end }}" href="{{ "/" | relURL }}"{{ if $isHome }} aria-current="page"{{ end }}>
+          <span class="nav-bracket nav-bracket-open" aria-hidden="true">[</span>
+          <span class="nav-label">Home</span>
+          <span class="nav-bracket nav-bracket-close" aria-hidden="true">]</span>
+        </a>
         {{ range $sections }}
-          <a class="nav-text" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          {{ $isCurrent := and $currentSection (eq $currentSection.RelPermalink .RelPermalink) }}
+          <a class="nav-text{{ if $isCurrent }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+            <span class="nav-bracket nav-bracket-open" aria-hidden="true">[</span>
+            <span class="nav-label">{{ .LinkTitle }}</span>
+            <span class="nav-bracket nav-bracket-close" aria-hidden="true">]</span>
+          </a>
         {{ end }}
       </nav>
     </div>
