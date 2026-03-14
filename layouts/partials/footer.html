@@ -1,4 +1,27 @@
 <footer class="site-footer border-top border-coffee-soft mt-auto">
+  {{ $footerRowKeys := slice }}
+  {{ range site.Sections }}
+    {{ $showInFooter := false }}
+    {{ $rawShowInFooter := index .Params "show_in_footer_menu" }}
+    {{ if ne $rawShowInFooter nil }}{{ $showInFooter = $rawShowInFooter }}{{ end }}
+    {{ if $showInFooter }}
+      {{ $position := 0 }}
+      {{ $rawPosition := index .Params "footer_menu_position" }}
+      {{ if ne $rawPosition nil }}{{ $position = int $rawPosition }}{{ end }}
+      {{ $slot := 1 }}
+      {{ $rawSlot := index .Params "footer_menu_position_slot" }}
+      {{ if ne $rawSlot nil }}{{ $slot = int $rawSlot }}{{ end }}
+      {{ if lt $slot 1 }}{{ $slot = 1 }}{{ end }}
+      {{ if gt $slot 4 }}{{ $slot = 4 }}{{ end }}
+      {{ $rowKey := printf "%08d" $position }}
+      {{ if not (in $footerRowKeys $rowKey) }}
+        {{ $footerRowKeys = $footerRowKeys | append $rowKey }}
+      {{ end }}
+      {{ $.Scratch.SetInMap "footerSectionsByRowSlot" (printf "%s-%d" $rowKey $slot) . }}
+    {{ end }}
+  {{ end }}
+  {{ $footerRowKeys = sort $footerRowKeys "value" "desc" }}
+
   {{ $footerAlignment := "left" }}
   {{ with site.Params.footer_alignment }}{{ $footerAlignment = lower . }}{{ end }}
   {{ $footerAlignClass := "text-start" }}
@@ -8,9 +31,62 @@
     {{ $footerAlignClass = "text-center" }}
   {{ end }}
 
-  <div class="container py-4 {{ $footerAlignClass }}">
-    {{ $footerText := "Brewed with Hugo." }}
-    {{ with site.Params.footer_text }}{{ $footerText = . }}{{ end }}
-    <p class="mb-0">{{ $footerText }}</p>
+  <div class="container py-4">
+    {{ if gt (len $footerRowKeys) 0 }}
+      <div class="footer-menu">
+        {{ range $rowKey := $footerRowKeys }}
+          {{ $rowSlots := slice }}
+          {{ range $slot := seq 1 4 }}
+            {{ $footerSection := index ($.Scratch.Get "footerSectionsByRowSlot") (printf "%s-%d" $rowKey $slot) }}
+            {{ with $footerSection }}
+              {{ $rowSlots = $rowSlots | append (dict "slot" $slot "section" .) }}
+            {{ end }}
+          {{ end }}
+          {{ $slotCount := len $rowSlots }}
+          {{ $colClass := "col-12" }}
+          {{ if eq $slotCount 2 }}
+            {{ $colClass = "col-12 col-md-6" }}
+          {{ else if eq $slotCount 3 }}
+            {{ $colClass = "col-12 col-md-6 col-lg-4" }}
+          {{ else if ge $slotCount 4 }}
+            {{ $colClass = "col-12 col-md-6 col-lg-3" }}
+          {{ end }}
+          <div class="footer-menu-row row g-4">
+            {{ range $rowSlots }}
+              {{ $footerSection := .section }}
+              <div class="{{ $colClass }}">
+                {{ $showTitle := true }}
+                {{ $rawShowTitle := index $footerSection.Params "footer_menu_show_title" }}
+                {{ if ne $rawShowTitle nil }}{{ $showTitle = $rawShowTitle }}{{ end }}
+                <section class="footer-menu-section">
+                  {{ if $showTitle }}
+                    <h2 class="footer-menu-title section-title mb-2">{{ $footerSection.LinkTitle }}</h2>
+                  {{ end }}
+                  {{ with $footerSection.Content }}
+                    <div class="footer-menu-body article-body">{{ . }}</div>
+                  {{ end }}
+                  {{ $items := $footerSection.RegularPagesRecursive.ByDate.Reverse }}
+                  {{ if gt (len $items) 0 }}
+                    <ul class="footer-menu-list list-unstyled mb-0">
+                      {{ range $items }}
+                        <li class="footer-menu-item">
+                          <a class="preview-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        </li>
+                      {{ end }}
+                    </ul>
+                  {{ end }}
+                </section>
+              </div>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    <div class="footer-meta mt-4 {{ $footerAlignClass }}">
+      {{ $footerText := "Brewed with Hugo." }}
+      {{ with site.Params.footer_text }}{{ $footerText = . }}{{ end }}
+      <p class="mb-0">{{ $footerText }}</p>
+    </div>
   </div>
 </footer>

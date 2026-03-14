@@ -2,8 +2,16 @@
   {{ $homeSectionKeys := slice }}
   {{ range site.Sections }}
     {{ $hidden := false }}
-    {{ with .Params.home_hidden }}{{ $hidden = . }}{{ end }}
-    {{ if not $hidden }}
+    {{ $rawHidden := index .Params "home_hidden" }}
+    {{ if ne $rawHidden nil }}{{ $hidden = $rawHidden }}{{ end }}
+    {{ $showInMenu := true }}
+    {{ $rawShowInMenu := index .Params "show_in_menu" }}
+    {{ if ne $rawShowInMenu nil }}{{ $showInMenu = $rawShowInMenu }}{{ end }}
+    {{ $showInFooter := false }}
+    {{ $rawShowInFooter := index .Params "show_in_footer_menu" }}
+    {{ if ne $rawShowInFooter nil }}{{ $showInFooter = $rawShowInFooter }}{{ end }}
+    {{ $footerOnly := and $showInFooter (not $showInMenu) }}
+    {{ if and (not $hidden) (not $footerOnly) }}
       {{ $position := 100000 }}
       {{ $rawPosition := index .Params "home_position" }}
       {{ if ne $rawPosition nil }}{{ $position = int $rawPosition }}{{ end }}

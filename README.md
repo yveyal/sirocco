@@ -6,6 +6,7 @@ A [Hugo](https://gohugo.io/) theme for a personal technical blog with a minimal 
 
 - Section-first homepage (ordered and toggleable per section)
 - Header navigation with bracketed active and hover states
+- Section-driven footer menu with ordered rows and slots
 - Section list pages with optional in-section indexes:
   - Series index
   - Tags index
@@ -124,6 +125,10 @@ Define in `content/<section>/_index.md`:
 
 - `show_in_menu`: show/hide the section in the header menu
 - `show_in_menu_when_section_chosen`: list of section names that should reveal this section in the header when one of them is active
+- `show_in_footer_menu`: show/hide the section in the footer menu
+- `footer_menu_position`: footer row order, sorted descending
+- `footer_menu_position_slot`: footer column slot from `1` (left) to `4` (right)
+- `footer_menu_show_title`: show/hide the section title in the footer menu
 - `home_position`: integer order on homepage (`0` = top)
 - `home_hidden`: hide/show section on homepage
 - `show_series_index`: show/hide section series block
@@ -131,6 +136,8 @@ Define in `content/<section>/_index.md`:
 - `description`: section description rendered on home/list pages
 
 `show_in_menu_when_section_chosen` uses section directory names such as `posts`, `projects`, or `notes`.
+
+Footer menu sections render the section body from `_index.md` and, when present, a vertical list of nested articles.
 
 ### Site params (example)
 

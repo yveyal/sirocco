@@ -312,6 +312,82 @@ a.article-title,
   font-size: 0.95rem;
 }
 
+.footer-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-menu-section {
+  min-height: 100%;
+}
+
+.footer-menu-title {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.footer-menu-item a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.08rem;
+  text-decoration: none;
+}
+
+.footer-menu-item a::before,
+.footer-menu-item a::after {
+  opacity: 0;
+  color: currentColor;
+  font-style: italic;
+  font-weight: 700;
+  transition: opacity 160ms ease;
+}
+
+.footer-menu-item a::before {
+  content: "[";
+}
+
+.footer-menu-item a::after {
+  content: "]";
+}
+
+.footer-menu-item a:hover,
+.footer-menu-item a:focus {
+  color: var(--link-hover);
+}
+
+.footer-menu-item a:hover::before,
+.footer-menu-item a:hover::after,
+.footer-menu-item a:focus::before,
+.footer-menu-item a:focus::after {
+  opacity: 1;
+}
+
+.footer-menu-body {
+  max-width: none;
+  font-size: 0.98rem;
+  color: var(--muted);
+}
+
+.footer-menu-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.footer-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.footer-menu-item {
+  line-height: 1.45;
+}
+
+.footer-meta {
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+
 .mermaid-container {
   margin: 1.25rem 0;
   padding: 0.75rem;
