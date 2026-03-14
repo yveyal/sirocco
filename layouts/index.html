@@ -17,13 +17,8 @@
   {{ with site.Params.home_show_tags }}{{ $showHomeTags = . }}{{ end }}
 
   <section class="container py-4">
-    <h1 class="home-title article-title mb-2">{{ site.Title }}</h1>
-    {{ with .Description }}
-      <p class="home-description section-description mb-0">{{ . }}</p>
-    {{ else }}
-    {{ with site.Params.description }}
-      <p class="home-description section-description mb-0">{{ . }}</p>
-    {{ end }}
+    {{ with .Content }}
+      <div class="article-body">{{ . }}</div>
     {{ end }}
   </section>
 

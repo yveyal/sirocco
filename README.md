@@ -111,12 +111,11 @@ make clean
 
 ## Configuration
 
-### Home page description source
+### Home page intro source
 
-The visible home description resolves in this order:
+The homepage intro renders the Markdown body from `content/_index.md`.
 
-1. `content/_index.md` front matter `description`
-2. `params.description` from `hugo.yaml` (fallback)
+The home page front matter `title` and `description` remain available for metadata, but they are not shown in the visible intro block.
 
 ### Section controls
 
