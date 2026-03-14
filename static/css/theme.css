@@ -1,6 +1,7 @@
 :root {
   --bg: #f7f2e8;
   --text: #2b231a;
+  --text-stronger: #221b13;
   --muted: #6f6456;
   --muted-light: #978a79;
   --line: #d8cdbd;
@@ -226,7 +227,6 @@ body.site-shell {
 }
 
 .meta-links a,
-.preview-link,
 .section-title a,
 .article-body a,
 .article-meta a,
@@ -287,8 +287,18 @@ a.article-title,
 }
 
 .preview-link {
+  color: var(--text-stronger);
   font-size: calc(var(--size-meta) + 0.14rem);
   font-weight: 500;
+  text-decoration: none;
+  transition: color 160ms ease, font-weight 160ms ease;
+}
+
+.preview-link:hover,
+.preview-link:focus {
+  color: var(--link-hover);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .section-tags-list {

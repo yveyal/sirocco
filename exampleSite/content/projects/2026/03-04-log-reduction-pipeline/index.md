@@ -5,6 +5,7 @@ tags:
   - "projects"
   - "logging"
 summary: "A pipeline that reduces noisy logs while keeping high-signal diagnostics."
+show_preview_date: false
 ---
 
 The goal is lower storage and clearer alerts without losing debugging depth.

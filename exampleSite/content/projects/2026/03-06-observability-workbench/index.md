@@ -5,6 +5,7 @@ tags:
   - "projects"
   - "observability"
 summary: "A dashboard and workflow for tracing incidents across services."
+show_preview_date: false
 ---
 
 A practical project focused on incident timelines, service health, and fast root-cause analysis.
